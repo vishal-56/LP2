@@ -1,0 +1,9 @@
+  START 100
+A DC '2
+B DS 5
+  ADD BREG A
+  SUB AREG B
+  DIV CREG B
+  STOP 
+C DC '1
+  END

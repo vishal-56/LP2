@@ -1,0 +1,50 @@
+public class TestJNI{
+  static{
+    System.loadLibrary("cal");
+  }
+  private native int add(int n1,int n2);
+ 
+ 
+  public static void main(String[] args)
+  {
+    TestJNI obj = new TestJNI();
+    System.out.println("Addition is = "+obj.add(10,20));
+  }
+}
+
+
+#include<stdio.h>
+#include "TestJNI.h"
+
+JNIEXPORT jint JNICALL Java_TestJNI_add(JNIEnv *env,jobject thisObj,jint n1,jint n2)
+{
+  jint res;
+  res = n1+n2;
+  return res;
+}
+
+void myCFunction()
+{
+  printf("Hello from c!\n");
+}
+
+
+
+
+abhinav@abhinav-VirtualBox:~/SPOS$ javac TestJNI.java
+abhinav@abhinav-VirtualBox:~/SPOS$ gcc -fpic -I /home/abhinav/java8/include -I /home/abhinav/java8/include/linux -o libcal.so -shared TestJNI.c
+abhinav@abhinav-VirtualBox:~/SPOS$ java TestJNI
+Addition is = 30
+abhinav@abhinav-VirtualBox:~/SPOS$
+
+
+sudo apt-get install openjdk-8-jdk
+and then find jdk path and put it in home
+For setting java path
+go to home directory then execute following commmands.
+ls .bashrc
+nano .bashrc
+
+export JAVA_HOME=/home/abhinav/java8
+export PATH=$JAVA_HOME/bin:$PATH
+add this paths at last and press ctrl+x
